@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grafica_navegacion"
+    app:startDestination="@id/fragment_Intro">
+    <fragment
+        android:id="@+id/fragment_Intro"
+        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro"
+        android:label="fragment__intro"
+        tools:layout="@layout/fragment__intro" >
+        <action
+            android:id="@+id/action_fragment_Intro_to_fragment_Intro_2"
+            app:destination="@id/fragment_Intro_2"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragment_Intro_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Intro_2"
+        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro_2"
+        android:label="fragment__intro_2"
+        tools:layout="@layout/fragment__intro_2" >
+        <action
+            android:id="@+id/action_fragment_Intro_2_to_fragment_Intro_3"
+            app:destination="@id/fragment_Intro_3"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragment_Intro_2_to_fragment_Intro"
+            app:destination="@id/fragment_Intro"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Intro_3"
+        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro_3"
+        android:label="fragment__intro_3"
+        tools:layout="@layout/fragment__intro_3" >
+        <action
+            android:id="@+id/action_fragment_Intro_3_to_fragment_Intro_4"
+            app:destination="@id/fragment_Intro_4"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragment_Intro_3_to_fragment_Intro_2"
+            app:destination="@id/fragment_Intro_2"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Intro_4"
+        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro_4"
+        android:label="fragment__intro_4"
+        tools:layout="@layout/fragment__intro_4" >
+        <action
+            android:id="@+id/action_fragment_Intro_4_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_fragment_Intro_4_to_fragment_Intro_3"
+            app:destination="@id/fragment_Intro_3"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.menuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_familiarFragment"
+            app:destination="@id/familiarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/familiarFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.FamiliarFragment"
+        android:label="fragment_familiar"
+        tools:layout="@layout/fragment_familiar" >
+        <action
+            android:id="@+id/action_familiarFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+</navigation>
