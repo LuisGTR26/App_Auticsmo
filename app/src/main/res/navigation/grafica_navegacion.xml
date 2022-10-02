@@ -75,7 +75,9 @@
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/action_menuFragment_to_familiarFragment"
-            app:destination="@id/familiarFragment" />
+            app:destination="@id/familiarFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/familiarFragment"
@@ -84,6 +86,24 @@
         tools:layout="@layout/fragment_familiar" >
         <action
             android:id="@+id/action_familiarFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            app:destination="@id/menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_familiarFragment_to_crearRutina"
+            app:destination="@id/crearRutina"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearRutina"
+        android:name="com.example.prototipo_tea_1.view.fragments.CrearRutina"
+        android:label="fragment_crear_rutina"
+        tools:layout="@layout/fragment_crear_rutina" >
+        <action
+            android:id="@+id/action_crearRutina_to_familiarFragment"
+            app:destination="@id/familiarFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>

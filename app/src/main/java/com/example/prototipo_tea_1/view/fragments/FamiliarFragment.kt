@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
 import com.example.prototipo_tea_1.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class FamiliarFragment : Fragment() {
@@ -20,9 +21,15 @@ class FamiliarFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_familiar, container, false)
 
         //Cuando pulsen regresar
-        val nextBtn: Button = view.findViewById(R.id.btnReturn)
-        nextBtn.setOnClickListener {
+        val backBtn: Button = view.findViewById(R.id.btnReturn)
+        backBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_familiarFragment_to_menuFragment)
+        }
+
+        //Cuando pulse el boton para crear una rutina
+        val crearBtn: FloatingActionButton = view.findViewById(R.id.btnAdd)
+        crearBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_familiarFragment_to_crearRutina)
         }
 
         return view
