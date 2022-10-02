@@ -25,6 +25,9 @@ class CrearRutina : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_crearRutina_to_familiarFragment)
         }
 
+        //Cuando pulse el boton de terminar
+
+
         return view
     }
 
