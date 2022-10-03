@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import com.example.prototipo_tea_1.R
 
-class menuFragment : Fragment() {
+class MenuFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +19,10 @@ class menuFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_menu, container, false)
 
         //Cuando pulse el boton personal
+        val personalBtn: CardView = view.findViewById(R.id.cardPersonal)
+        personalBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_personalFragment)
+        }
 
         //Cuando pulse el boton familiar
         val familiarBtn: CardView = view.findViewById(R.id.cardFamiliar)
@@ -27,6 +31,10 @@ class menuFragment : Fragment() {
         }
 
         //Cuando pulse el boton social
+        val socialBtn: CardView = view.findViewById(R.id.cardSocial)
+        socialBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_socialFragment)
+        }
 
         return view
     }

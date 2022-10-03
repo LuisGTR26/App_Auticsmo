@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.prototipo_tea_1.view.fragments.menuFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -78,6 +78,12 @@
             app:destination="@id/familiarFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_menuFragment_to_personalFragment"
+            app:destination="@id/personalFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_socialFragment"
+            app:destination="@id/socialFragment" />
     </fragment>
     <fragment
         android:id="@+id/familiarFragment"
@@ -103,6 +109,34 @@
         <action
             android:id="@+id/action_crearRutina_to_familiarFragment"
             app:destination="@id/familiarFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.PersonalFragment"
+        android:label="fragment_personal"
+        tools:layout="@layout/fragment_personal" >
+        <action
+            android:id="@+id/action_personalFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_personalFragment_to_crearRutina"
+            app:destination="@id/crearRutina"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/socialFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.SocialFragment"
+        android:label="fragment_social"
+        tools:layout="@layout/fragment_social" >
+        <action
+            android:id="@+id/action_socialFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_socialFragment_to_crearRutina"
+            app:destination="@id/crearRutina"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
