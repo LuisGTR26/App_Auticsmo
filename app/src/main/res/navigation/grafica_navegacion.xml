@@ -3,71 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/grafica_navegacion"
-    app:startDestination="@id/fragment_Intro">
-    <fragment
-        android:id="@+id/fragment_Intro"
-        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro"
-        android:label="fragment__intro"
-        tools:layout="@layout/fragment__intro" >
-        <action
-            android:id="@+id/action_fragment_Intro_to_fragment_Intro_2"
-            app:destination="@id/fragment_Intro_2"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_fragment_Intro_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_Intro_2"
-        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro_2"
-        android:label="fragment__intro_2"
-        tools:layout="@layout/fragment__intro_2" >
-        <action
-            android:id="@+id/action_fragment_Intro_2_to_fragment_Intro_3"
-            app:destination="@id/fragment_Intro_3"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_fragment_Intro_2_to_fragment_Intro"
-            app:destination="@id/fragment_Intro"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_Intro_3"
-        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro_3"
-        android:label="fragment__intro_3"
-        tools:layout="@layout/fragment__intro_3" >
-        <action
-            android:id="@+id/action_fragment_Intro_3_to_fragment_Intro_4"
-            app:destination="@id/fragment_Intro_4"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_fragment_Intro_3_to_fragment_Intro_2"
-            app:destination="@id/fragment_Intro_2"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_Intro_4"
-        android:name="com.example.prototipo_tea_1.view.fragments.Fragment_Intro_4"
-        android:label="fragment__intro_4"
-        tools:layout="@layout/fragment__intro_4" >
-        <action
-            android:id="@+id/action_fragment_Intro_4_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_fragment_Intro_4_to_fragment_Intro_3"
-            app:destination="@id/fragment_Intro_3"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.prototipo_tea_1.view.fragments.MenuFragment"
@@ -80,10 +16,19 @@
             app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_menuFragment_to_personalFragment"
-            app:destination="@id/personalFragment" />
+            app:destination="@id/personalFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_menuFragment_to_socialFragment"
-            app:destination="@id/socialFragment" />
+            app:destination="@id/socialFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_menuFragment_to_crearRutina"
+            app:destination="@id/crearRutina"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/familiarFragment"
@@ -95,11 +40,6 @@
             app:destination="@id/menuFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_familiarFragment_to_crearRutina"
-            app:destination="@id/crearRutina"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/crearRutina"
@@ -107,8 +47,13 @@
         android:label="fragment_crear_rutina"
         tools:layout="@layout/fragment_crear_rutina" >
         <action
-            android:id="@+id/action_crearRutina_to_familiarFragment"
-            app:destination="@id/familiarFragment"
+            android:id="@+id/action_crearRutina_to_crearProcedimiento"
+            app:destination="@id/crearProcedimiento"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_crearRutina_to_menuFragment"
+            app:destination="@id/menuFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
@@ -119,10 +64,7 @@
         tools:layout="@layout/fragment_personal" >
         <action
             android:id="@+id/action_personalFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
-        <action
-            android:id="@+id/action_personalFragment_to_crearRutina"
-            app:destination="@id/crearRutina"
+            app:destination="@id/menuFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
@@ -133,10 +75,45 @@
         tools:layout="@layout/fragment_social" >
         <action
             android:id="@+id/action_socialFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            app:destination="@id/menuFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.intro.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_socialFragment_to_crearRutina"
-            app:destination="@id/crearRutina"
+            android:id="@+id/action_splashFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.intro.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" >
+        <action
+            android:id="@+id/action_viewPagerFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/viewPagerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearProcedimiento"
+        android:name="com.example.prototipo_tea_1.view.fragments.CrearProcedimiento"
+        android:label="fragment_crear_procedimiento"
+        tools:layout="@layout/fragment_crear_procedimiento" >
+        <action
+            android:id="@+id/action_crearProcedimiento_to_menuFragment"
+            app:destination="@id/menuFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>

@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
-        android:id="@+id/txtNombreRutina"
+        android:id="@+id/txtRutina"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rutina"

@@ -6,4 +6,12 @@
     <!-- INTRO -->
     <string name="welIntro">BIENVENIDO A AUTICSMO</string>
     <string name="descIntro">TU APLICACIÓN PARA LA AYUDA DE LOS NINOS CON AUTISMO</string>
+
+
+    <!-- Lista de ambitos -->
+    <string-array name="listAmbitos">
+        <item>PERSONAL</item>
+        <item>FAMILIAR</item>
+        <item>SOCIAL</item>
+    </string-array>
 </resources>

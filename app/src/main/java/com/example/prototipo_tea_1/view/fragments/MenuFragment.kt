@@ -5,39 +5,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import com.example.prototipo_tea_1.R
+import com.example.prototipo_tea_1.databinding.FragmentMenuBinding
 
 class MenuFragment : Fragment() {
+
+    //Binding
+    private var _binding: FragmentMenuBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_menu, container, false)
+        // Para ingresar el binding
+        _binding = FragmentMenuBinding.inflate(inflater)
+        val view = binding.root
 
         //Cuando pulse el boton personal
-        val personalBtn: CardView = view.findViewById(R.id.cardPersonal)
+        val personalBtn = binding.cardPersonal
         personalBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_personalFragment)
         }
-
         //Cuando pulse el boton familiar
-        val familiarBtn: CardView = view.findViewById(R.id.cardFamiliar)
+        val familiarBtn = binding.cardFamiliar
         familiarBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_familiarFragment)
         }
-
         //Cuando pulse el boton social
-        val socialBtn: CardView = view.findViewById(R.id.cardSocial)
+        val socialBtn = binding.cardSocial
         socialBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_socialFragment)
         }
-
+        //Cuando pulse el boton para crear una rutina
+        val crearBtn = binding.btnAdd
+        crearBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_crearRutina)
+        }
         return view
     }
-
-
 }
