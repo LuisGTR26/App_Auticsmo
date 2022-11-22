@@ -32,7 +32,7 @@ class Fragment_Intro_4 : Fragment() {
         //Cuando den en terminar
         val nextBtn = binding.btnFinish
         nextBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_viewPagerFragment_to_menuFragment)
+            findNavController().navigate(R.id.action_viewPagerFragment_to_menuActivity2)
             onBoardingFinished()
         }
         //Cuando pulsen regresar

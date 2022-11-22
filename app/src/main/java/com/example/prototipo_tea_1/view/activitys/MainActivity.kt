@@ -1,4 +1,4 @@
-package com.example.prototipo_tea_1.view
+package com.example.prototipo_tea_1.view.activitys
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +15,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-
+    }
+    //Cuando presione el boton retroceso del dispositivo
+    override fun onBackPressed() {
     }
 
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Personal"
+        android:id="@+id/personalFragment"
+        android:icon="@drawable/ic_personal"/>
+    <item android:title="Familiar"
+        android:id="@+id/familiarFragment"
+        android:icon="@drawable/ic_familiar"/>
+    <item android:title="Social"
+        android:id="@+id/socialFragment"
+        android:icon="@drawable/ic_social"/>
+</menu>

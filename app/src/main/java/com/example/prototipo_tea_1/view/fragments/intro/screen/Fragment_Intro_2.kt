@@ -1,5 +1,6 @@
 package com.example.prototipo_tea_1.view.fragments.intro.screen
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,10 @@ class Fragment_Intro_2 : Fragment() {
     private var _binding: FragmentIntro2Binding? = null
     private val binding get() = _binding!!
 
+    // Valores para guardar el nomnbre
+    val MY_SHARED_PREF_NAME = "my_shared_pref"
+    val NAME = "name"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,6 +35,7 @@ class Fragment_Intro_2 : Fragment() {
         //Cuando den siguiente
         val nextBtn = binding.btnNext
         nextBtn.setOnClickListener {
+            saveData()
             viewPager?.currentItem = 2
         }
         //Cuando pulsen regresar
@@ -38,6 +44,15 @@ class Fragment_Intro_2 : Fragment() {
             viewPager?.currentItem = 1
         }
         return view
+    }
+
+    private fun saveData(){
+        val insertName = binding.etNombre.text.toString()
+        val sharedPref = this.requireActivity().getSharedPreferences(MY_SHARED_PREF_NAME,
+            Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString(NAME,insertName)
+        editor.apply()
     }
 
 }

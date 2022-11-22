@@ -27,6 +27,7 @@ class Fragment_Intro_3 : Fragment() {
 
         val  viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
 
+        
         //Cuando den siguiente
         val nextBtn = binding.btnNext
         nextBtn.setOnClickListener {

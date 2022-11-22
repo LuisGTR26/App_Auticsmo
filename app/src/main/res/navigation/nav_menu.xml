@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_menu"
+    app:startDestination="@id/personalFragment">
+
+    <fragment
+        android:id="@+id/personalFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.PersonalFragment"
+        android:label="fragment_personal"
+        tools:layout="@layout/fragment_personal" >
+        <action
+            android:id="@+id/action_personalFragment_to_crearRutina"
+            app:destination="@id/crearRutina" />
+        <action
+            android:id="@+id/action_personalFragment_to_procedimientosFragment"
+            app:destination="@id/procedimientosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/familiarFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.FamiliarFragment"
+        android:label="fragment_familiar"
+        tools:layout="@layout/fragment_familiar" >
+        <action
+            android:id="@+id/action_familiarFragment_to_crearRutina"
+            app:destination="@id/crearRutina" />
+        <action
+            android:id="@+id/action_familiarFragment_to_procedimientosFragment"
+            app:destination="@id/procedimientosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/socialFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.SocialFragment"
+        android:label="fragment_social"
+        tools:layout="@layout/fragment_social" >
+        <action
+            android:id="@+id/action_socialFragment_to_crearRutina"
+            app:destination="@id/crearRutina" />
+        <action
+            android:id="@+id/action_socialFragment2_to_procedimientosFragment"
+            app:destination="@id/procedimientosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearRutina"
+        android:name="com.example.prototipo_tea_1.view.fragments.CrearRutina"
+        android:label="fragment_crear_rutina"
+        tools:layout="@layout/fragment_crear_rutina" >
+        <action
+            android:id="@+id/action_crearRutina_to_crearProcedimiento"
+            app:destination="@id/crearProcedimiento" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearProcedimiento"
+        android:name="com.example.prototipo_tea_1.view.fragments.CrearProcedimiento"
+        android:label="fragment_crear_procedimiento"
+        tools:layout="@layout/fragment_crear_procedimiento" >
+        <argument
+            android:name="rutina"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/procedimientosFragment"
+        android:name="com.example.prototipo_tea_1.view.fragments.ProcedimientosFragment"
+        android:label="fragment_procedimientos"
+        tools:layout="@layout/fragment_procedimientos" >
+        <argument
+            android:name="currentRutina"
+            app:argType="com.example.prototipo_tea_1.model.data.database.entities.Rutina" />
+
+    </fragment>
+</navigation>

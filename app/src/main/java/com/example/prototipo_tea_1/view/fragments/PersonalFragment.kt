@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.prototipo_tea_1.R
-import com.example.prototipo_tea_1.adapters.RutinaAdapter
+import com.example.prototipo_tea_1.adapters.PersonalAdapter
 import com.example.prototipo_tea_1.databinding.FragmentPersonalBinding
 import com.example.prototipo_tea_1.viewmodel.MainViewModel
 
@@ -33,7 +33,7 @@ class PersonalFragment : Fragment() {
         val view = binding.root
 
         //RecyclerView
-        val adapter = RutinaAdapter()
+        val adapter = PersonalAdapter()
         val recyclerView = binding.listRutinas
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -48,11 +48,17 @@ class PersonalFragment : Fragment() {
             adapter.setData(rutina)
         })
 
-        //Cuando pulsen regresar
-        val backBtn = binding.btnReturn
-        backBtn.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_personalFragment_to_menuFragment)
+        //Cuando pulse el boton para crear una rutina
+        val crearBtn = binding.btnAdd
+        crearBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_personalFragment_to_crearRutina)
         }
+
+        //Cuando pulsen regresar
+        //val backBtn = binding.btnReturn
+        //        backBtn.setOnClickListener {
+        //            Navigation.findNavController(view).navigate(R.id.action_personalFragment_to_menuFragment)
+        //        }
 
         return view
     }

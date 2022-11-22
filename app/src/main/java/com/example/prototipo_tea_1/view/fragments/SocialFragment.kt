@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.prototipo_tea_1.R
-import com.example.prototipo_tea_1.adapters.RutinaAdapter
+import com.example.prototipo_tea_1.adapters.SocialAdapter
 import com.example.prototipo_tea_1.databinding.FragmentSocialBinding
 import com.example.prototipo_tea_1.viewmodel.MainViewModel
 
@@ -34,13 +34,13 @@ class SocialFragment : Fragment() {
         val view = binding.root
 
         //RecyclerView
-        val adapter = RutinaAdapter()
+        val adapter = SocialAdapter()
         val recyclerView = binding.listRutinas
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         //RutinaViewModel
-        mRutinaViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mRutinaViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         //Lectura y Observador en el Recycler
         //Primero obtenemos las rutinas de familiar
         val listaRutinas = mRutinaViewModel.mostrarRutinaAmbito(NOMBRE_DE_AMBITO)
@@ -49,11 +49,17 @@ class SocialFragment : Fragment() {
             adapter.setData(rutina)
         })
 
-        //Cuando pulsen regresar
-        val backBtn = binding.btnReturn
-        backBtn.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_socialFragment_to_menuFragment)
+        //Cuando pulse el boton para crear una rutina
+        val crearBtn = binding.btnAdd
+        crearBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_socialFragment_to_crearRutina)
         }
+
+        //Cuando pulsen regresar
+        //val backBtn = binding.btnReturn
+        //        backBtn.setOnClickListener {
+        //            Navigation.findNavController(view).navigate(R.id.action_socialFragment_to_menuFragment)
+        //        }
 
         return view
     }

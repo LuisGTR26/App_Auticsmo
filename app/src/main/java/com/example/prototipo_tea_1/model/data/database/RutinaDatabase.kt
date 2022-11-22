@@ -4,14 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.prototipo_tea_1.model.Converters
 import com.example.prototipo_tea_1.model.data.database.dao.RutinaDao
+import com.example.prototipo_tea_1.model.data.database.entities.Procedimiento
 import com.example.prototipo_tea_1.model.data.database.entities.Rutina
+import com.example.prototipo_tea_1.model.data.database.entities.RutinaWithProcedimiento
 
 @Database (
-    entities = [Rutina::class],
-    version = 1,
-    exportSchema = false)
-
+    entities = [
+        Rutina::class,
+        Procedimiento::class
+               ],
+    version = 2,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
 abstract class RutinaDatabase: RoomDatabase() {
 
     //variable del dao
@@ -39,11 +47,4 @@ abstract class RutinaDatabase: RoomDatabase() {
         }
     }
 
-
-
-    ////Creacion del room
-    //    val room: RutinaDatabase = Room
-    //        .databaseBuilder(this, RutinaDatabase::class.java, "rutina")
-    //        .build()
-    //val rutinas = room.rutinaDao().getAll()
 }

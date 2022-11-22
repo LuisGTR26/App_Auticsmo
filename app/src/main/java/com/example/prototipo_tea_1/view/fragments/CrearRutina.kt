@@ -1,33 +1,47 @@
 package com.example.prototipo_tea_1.view.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.prototipo_tea_1.R
 import com.example.prototipo_tea_1.databinding.FragmentCrearRutinaBinding
 import com.example.prototipo_tea_1.model.data.database.entities.Rutina
+import com.example.prototipo_tea_1.view.activitys.MenuActivity
 import com.example.prototipo_tea_1.viewmodel.MainViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 
 class CrearRutina : Fragment() {
 
     //Var global
-    var ambito: String = ""
+    var ambito:String = ""
+    lateinit var image: Bitmap
+    var imageUri: Uri? = null
+
     //Binding
     private var _binding: FragmentCrearRutinaBinding? = null
     private val binding get() = _binding!!
@@ -45,9 +59,14 @@ class CrearRutina : Fragment() {
         // Para ingresar el binding
         _binding = FragmentCrearRutinaBinding.inflate(inflater)
         val view = binding.root
+        //Ocultamos el bottom navigation y el banner superior
+        val navB= requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val relL= requireActivity().findViewById<ConstraintLayout>(R.id.bannerMenu)
+        navB.visibility = View.GONE
+        relL.visibility = View.GONE
 
         //ViewModel
-        mRutinaViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mRutinaViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         //Spinner de seleccion de ambitos
         val spinner = binding.spinAmbitos
@@ -71,12 +90,24 @@ class CrearRutina : Fragment() {
         //Cuando pulse el boton para regresar al menu
         val backBtn = binding.btnBack
         backBtn.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_crearRutina_to_menuFragment)
+            //Lo dirigimos al menu
+            val intent = Intent(activity, MenuActivity::class.java)
+            startActivity(intent)
         }
+
         //Cuando pulse el boton seleccionar imagen
         val selecBtn = binding.btnCambiar
         selecBtn.setOnClickListener {
-            showPictureDialog()
+                //showPictureDialog()
+            //Verificamos que tenga permisos de camara y almacenamiento
+            if (ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED ){
+                    showPictureDialog()
+                }else{
+                    getPermission()
+
+                }
         }
         //Cuando pulse el boton de terminar
         val finishBtn = binding.btnIrPasos
@@ -87,31 +118,35 @@ class CrearRutina : Fragment() {
         return view
     }
 
-    //Para agregar la rutina a la bd
-    private fun insertDataToDatabase() {
-        val titulo = binding.titleRutina.text.toString()
-        //Verificamos que no este vacio
-        if (inputCheck(titulo)){
-            //Crea el objeto
-            val rutina = Rutina(0, titulo, ambito)
-            //Lo añadimos a la bd
-            mRutinaViewModel.addRutina(rutina)
-            //Desplegamos mensaje de éxito
-            Toast.makeText(requireContext(), "Rutina Añadida", Toast.LENGTH_LONG).show()
-            //Regresamos a la pantalla principal
-            findNavController().navigate(R.id.action_crearRutina_to_crearProcedimiento)
-        }else{
-            //Desplegamos mensaje de error
-            Toast.makeText(requireContext(), "Por favor ingrese los datos faltantes", Toast.LENGTH_LONG).show()
-        }
-    }
-
     //Para verificar si estan vacios los editText
     private fun inputCheck(titulo:String):Boolean{
-        //TODO Por ahora solo verificamos el titulo
         return !(TextUtils.isEmpty(titulo))
     }
 
+    //Para agregar la rutina a la bd
+    private fun insertDataToDatabase() {
+        val titulo = binding.titleRutina.text.toString()
+        val imgV = binding.imgRutina
+
+        //Verificamos que no este vacio
+        if (titulo.isNotEmpty()){
+            if (imgV.tag != "vacio"){
+                //Creamos un objeto
+                val rutina = Rutina(0, titulo, image, ambito)
+                //Lo añadimos a la bd
+                mRutinaViewModel.addRutina(rutina)
+                //Desplegamos mensaje de éxito
+                Toast.makeText(requireContext(), "Rutina Añadida", Toast.LENGTH_LONG).show()
+                //Nos dirigimos para crear los pasos
+                val direction = CrearRutinaDirections.actionCrearRutinaToCrearProcedimiento(titulo)
+                findNavController().navigate(direction)
+            }else{
+                Toast.makeText(requireContext(), "Imagen Faltante", Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            Toast.makeText(requireContext(), "Por favor ingrese los datos faltantes", Toast.LENGTH_LONG).show()
+        }
+    }
 
     //Despliega un cuadro de dialogo
     private fun showPictureDialog() {
@@ -135,7 +170,16 @@ class CrearRutina : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK){
-            binding.imgRutina.setImageURI(data?.data)
+            //Guardamos el valor de la imagen
+            imageUri = data!!.data
+            val imgstring = imageUri.toString()
+            // Dentro de esta variable se guarda la conversion del Uri en Bitmap
+            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(),Uri.parse(imgstring))
+            val imageView = binding.imgRutina
+            imageView.setImageBitmap(bitmap)
+            //Ponemos el valor del bitmap en la variable global para su uso en la base de datos
+            image = bitmap
+            imageView.tag = "no vacio"
         }
     }
     private fun TomarFotoCamara() {
@@ -150,7 +194,38 @@ class CrearRutina : Fragment() {
             val imageBitmap = intent?.extras?.get("data") as Bitmap
             val imageView = binding.imgRutina
             imageView.setImageBitmap(imageBitmap)
+            //Agregamos el valor de la imagen de Bitmap en la variable global para poder manejarlo fuera de la funcion.
+            image = imageBitmap
+            imageView.tag = "no vacio"
         }
     }
+
+    //Solicitamos los permisos
+    fun getPermission(){
+            Dexter.withContext(requireContext())
+            .withPermissions(android.Manifest.permission.CAMERA,android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    report.let {
+                        if (report!!.areAllPermissionsGranted()){
+                            Toast.makeText(requireContext(), "Permiso Otorgado", Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(requireContext(), "No es Posible Acceder a esta Funcion sin los Permisos", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+            }).withErrorListener {
+                Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+            }.check()
+    }
+
+    //Boton regresar del sistema
 
 }

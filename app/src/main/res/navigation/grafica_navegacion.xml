@@ -5,81 +5,6 @@
     android:id="@+id/grafica_navegacion"
     app:startDestination="@id/splashFragment">
     <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.example.prototipo_tea_1.view.fragments.MenuFragment"
-        android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" >
-        <action
-            android:id="@+id/action_menuFragment_to_familiarFragment"
-            app:destination="@id/familiarFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_menuFragment_to_personalFragment"
-            app:destination="@id/personalFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_menuFragment_to_socialFragment"
-            app:destination="@id/socialFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_menuFragment_to_crearRutina"
-            app:destination="@id/crearRutina"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/familiarFragment"
-        android:name="com.example.prototipo_tea_1.view.fragments.FamiliarFragment"
-        android:label="fragment_familiar"
-        tools:layout="@layout/fragment_familiar" >
-        <action
-            android:id="@+id/action_familiarFragment_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/crearRutina"
-        android:name="com.example.prototipo_tea_1.view.fragments.CrearRutina"
-        android:label="fragment_crear_rutina"
-        tools:layout="@layout/fragment_crear_rutina" >
-        <action
-            android:id="@+id/action_crearRutina_to_crearProcedimiento"
-            app:destination="@id/crearProcedimiento"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_crearRutina_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/personalFragment"
-        android:name="com.example.prototipo_tea_1.view.fragments.PersonalFragment"
-        android:label="fragment_personal"
-        tools:layout="@layout/fragment_personal" >
-        <action
-            android:id="@+id/action_personalFragment_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/socialFragment"
-        android:name="com.example.prototipo_tea_1.view.fragments.SocialFragment"
-        android:label="fragment_social"
-        tools:layout="@layout/fragment_social" >
-        <action
-            android:id="@+id/action_socialFragment_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.prototipo_tea_1.view.fragments.intro.SplashFragment"
         android:label="fragment_splash"
@@ -90,8 +15,8 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashFragment_to_menuFragment"
-            app:destination="@id/menuFragment"
+            android:id="@+id/action_splashFragment_to_menuActivity2"
+            app:destination="@id/menuActivity2"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -101,20 +26,14 @@
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager" >
         <action
-            android:id="@+id/action_viewPagerFragment_to_menuFragment"
-            app:destination="@id/menuFragment"
+            android:id="@+id/action_viewPagerFragment_to_menuActivity2"
+            app:destination="@id/menuActivity2"
             app:popUpTo="@id/viewPagerFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/crearProcedimiento"
-        android:name="com.example.prototipo_tea_1.view.fragments.CrearProcedimiento"
-        android:label="fragment_crear_procedimiento"
-        tools:layout="@layout/fragment_crear_procedimiento" >
-        <action
-            android:id="@+id/action_crearProcedimiento_to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
+    <activity
+        android:id="@+id/menuActivity2"
+        android:name="com.example.prototipo_tea_1.view.activitys.MenuActivity"
+        android:label="activity_menu"
+        tools:layout="@layout/activity_menu" />
 </navigation>

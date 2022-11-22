@@ -37,7 +37,7 @@ class Fragment_Intro : Fragment() {
         //Cuando omitan
         val skipBtn = binding.btnSkip
         skipBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_viewPagerFragment_to_menuFragment)
+            findNavController().navigate(R.id.action_viewPagerFragment_to_menuActivity2)
             onBoardingFinished()
         }
         return view

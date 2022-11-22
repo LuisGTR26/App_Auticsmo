@@ -17,18 +17,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_arrow_back" />
-
         <TextView
             android:id="@+id/numRutina"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="PASO UNO"
+            android:text="CREAR LOS PASOS"
             android:textAlignment="center"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -47,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/relTittle">
 
         <EditText
-            android:id="@+id/titleRutina"
+            android:id="@+id/titlePaso"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -57,7 +51,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/detailsRutina"
+            android:id="@+id/detailsPaso"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -89,11 +83,12 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/imgRutina"
+            android:id="@+id/imgPaso"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_camara" />
+            android:src="@drawable/ic_camara"
+            android:tag="vacio"
+            android:layout_margin="10dp" />
 
         <Button
             android:id="@+id/btnCambiar"

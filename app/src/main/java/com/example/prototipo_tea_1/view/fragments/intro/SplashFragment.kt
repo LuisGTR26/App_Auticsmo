@@ -21,7 +21,7 @@ class SplashFragment : Fragment() {
         Handler().postDelayed({
             //Para comprobar si ya se realizó la configuracion inicial
             if (onBoardingFinished()){
-                findNavController().navigate(R.id.action_splashFragment_to_menuFragment)
+                findNavController().navigate(R.id.action_splashFragment_to_menuActivity2)
             }else{
                 findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
             }
