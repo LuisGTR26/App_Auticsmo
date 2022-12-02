@@ -40,18 +40,13 @@ class ProcedimientosFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProcedimientosBinding.inflate(inflater)
         val view = binding.root
-        //Ocultamos el bottom navigation y el banner superior
-        val navB= requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val relL= requireActivity().findViewById<ConstraintLayout>(R.id.bannerMenu)
-        navB.visibility = View.GONE
-        relL.visibility = View.GONE
         //Obtenemos el nombre de la rutina con los argumentos
-        val nameRutina = args.currentRutina.titleRutina
+        val idRutina = args.currentRutina.idRutina
         val ambito = args.currentRutina.ambito
         //ViewModel
         procedimientosViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         //Hacemos la consulta para todos los pasos
-        val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(nameRutina)
+        val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(idRutina)
         //Creamos una variable para guardar el tamaño de la lista
         var listP = 0
         //Mostrar los datos
@@ -70,7 +65,7 @@ class ProcedimientosFragment : Fragment() {
                 //Verificamos que recorra dentro del limite de la lista
                 if (i < listP-1){
                     i++
-                    val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(nameRutina)
+                    val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(idRutina)
                     //Cambiamos los datos
                     listaProcedimientos.observe(viewLifecycleOwner, Observer{
                             listaProcedimientos -> listaProcedimientos[0]
@@ -99,7 +94,7 @@ class ProcedimientosFragment : Fragment() {
             if(binding.btnNext.text == "TERMINAR"){
                 //Cambiamos el nombre del boton
                 binding.btnNext.text = "SIGUIENTE"
-                val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(nameRutina)
+                val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(idRutina)
                 //Cambiamos los datos
                 listaProcedimientos.observe(viewLifecycleOwner, Observer{
                         listaProcedimientos -> listaProcedimientos[0]
@@ -111,7 +106,7 @@ class ProcedimientosFragment : Fragment() {
                 //Verificamos que recorra dentro del limite de la lista
                 if (i < listP && i != 0){
                         i--
-                        val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(nameRutina)
+                        val listaProcedimientos = procedimientosViewModel.mostrarPasosRutina(idRutina)
                         //Cambiamos los datos
                         listaProcedimientos.observe(viewLifecycleOwner, Observer{
                                 listaProcedimientos -> listaProcedimientos[0]

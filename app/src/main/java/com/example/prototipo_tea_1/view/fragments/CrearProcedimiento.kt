@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.prototipo_tea_1.R
@@ -28,6 +29,10 @@ import com.example.prototipo_tea_1.model.data.database.entities.Procedimiento
 import com.example.prototipo_tea_1.view.activitys.MenuActivity
 import com.example.prototipo_tea_1.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class CrearProcedimiento : Fragment() {
@@ -36,7 +41,8 @@ class CrearProcedimiento : Fragment() {
     lateinit var image: Bitmap
     var imageUri: Uri? = null
     private val args: CrearProcedimientoArgs by navArgs()
-    private var nrutina = ""
+    private var i = 0
+    var idR = 0
     //ViewModel
     private lateinit var mPasoViewModel: MainViewModel
 
@@ -51,19 +57,16 @@ class CrearProcedimiento : Fragment() {
         // Para ingresar el binding
         _binding = FragmentCrearProcedimientoBinding.inflate(inflater)
         val view = binding.root
-        //Ocultamos el bottom navigation y el banner superior
-        val navB= requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val relL= requireActivity().findViewById<ConstraintLayout>(R.id.bannerMenu)
-        navB.visibility = View.GONE
-        relL.visibility = View.GONE
-
-        //Obtenemos el nombre de la rutina para crear los procedimientos
-        nrutina = args.rutina
         //ViewModel
         mPasoViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
+        //Buscamos la id de la rutina con el nombre
+        lifecycleScope.launch(Dispatchers.IO){
+            idR = mPasoViewModel.mostrarIdRutina(args.rutina)
+        }
+
         //Cuando pulse el boton seleccionar imagen
-        val selecBtn = binding.btnCambiar
+        val selecBtn = binding.imgPaso
         selecBtn.setOnClickListener {
             showPictureDialog()
         }
@@ -77,15 +80,18 @@ class CrearProcedimiento : Fragment() {
         //Cuando pulse el boton de terminar
         val exitBtn = binding.btnTerminar
         exitBtn.setOnClickListener {
-            //Lo dirigimos al menu
-            val intent = Intent(activity, MenuActivity::class.java)
-            startActivity(intent)
+            //Verificamos que al menos tenga un paso añadido
+            if (i != 0){
+                //Lo dirigimos al menu
+                val intent = Intent(activity, MenuActivity::class.java)
+                startActivity(intent)
+            }else{
+                Toast.makeText(requireContext(), "Por favor ingrese al menos un paso", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return view
     }
-
-    //Para agregar la rutina a la bd
     private fun insertPasoToDatabase() {
         val titulo = binding.titlePaso.text.toString()
         val detalle = binding.detailsPaso.text.toString()
@@ -93,21 +99,32 @@ class CrearProcedimiento : Fragment() {
 
         //Verificamos que no este vacio
         if (titulo.isNotEmpty() && detalle.isNotEmpty()){
-            //Verificamos si tiene imagen
-            if (imgV.tag != "vacio"){
-                //Creamos un objeto
-                val procedimiento = Procedimiento(0, titulo, detalle, image, nrutina)
-                //Lo añadimos a la bd
-                mPasoViewModel.addProcedimiento(procedimiento)
-                //Desplegamos mensaje de éxito
-                Toast.makeText(requireContext(), "Paso Añadido", Toast.LENGTH_LONG).show()
-                //Limpiamos los campos
-                binding.titlePaso.setText("")
-                binding.detailsPaso.setText("")
-                binding.imgPaso.setImageResource(R.drawable.ic_camara)
-                imgV.tag = "vacio"
+            //Verificamos que tenga un minimo y un maximo de palabras el titulo
+            if(titulo.length < 3  || titulo.length > 20){
+                Toast.makeText(requireContext(),"Escribe un mínimo de 3 palabras en el título de la rutina",Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(requireContext(), "Imagen Faltante", Toast.LENGTH_SHORT).show()
+                //Verificamos que tenga un minimo y un maximo de palabras el detalle
+                if (detalle.length < 3 || detalle.length > 30){
+                    Toast.makeText(requireContext(),"Escribe un mínimo de 3 en el detalle de la rutina",Toast.LENGTH_SHORT).show()
+                }else{
+                    //Verificamos si tiene imagen
+                    if (imgV.tag != "vacio"){
+                        //Creamos un objeto
+                        val procedimiento = Procedimiento(0, titulo, detalle, image, idR)
+                        //Lo añadimos a la bd
+                        mPasoViewModel.addPaso(procedimiento)
+                        //Desplegamos mensaje de éxito
+                        Toast.makeText(requireContext(), "Paso Añadido", Toast.LENGTH_LONG).show()
+                        //Limpiamos los campos
+                        binding.titlePaso.setText("")
+                        binding.detailsPaso.setText("")
+                        binding.imgPaso.setImageResource(R.drawable.ic_camara)
+                        imgV.tag = "vacio"
+                        i++
+                    }else{
+                        Toast.makeText(requireContext(), "Imagen Faltante", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }else{
             Toast.makeText(requireContext(), "Por favor ingrese los datos faltantes", Toast.LENGTH_LONG).show()

@@ -7,15 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="line">#d8d6d6</color>
 
+    <!-- Theme Blue -->
+    <color name="primaryColor_blue">#039be5</color>
+    <color name="primaryLightColor_blue">#63ccff</color>
+    <color name="primaryDarkColor_blue">#006db3</color>
+    <color name="secondaryColor_blue">#4fc3f7</color>
+    <color name="secondaryLightColor_blue">#8bf6ff</color>
+    <color name="secondaryDarkColor_blue">#0093c4</color>
+    <color name="primaryTextColor_blue">#000000</color>
+    <color name="secondaryTextColor_blue">#000000</color>
 
-        <color name="primaryColor">#039be5</color>
-        <color name="primaryLightColor">#63ccff</color>
-        <color name="primaryDarkColor">#006db3</color>
-        <color name="secondaryColor">#4fc3f7</color>
-        <color name="secondaryLightColor">#8bf6ff</color>
-        <color name="secondaryDarkColor">#0093c4</color>
-        <color name="primaryTextColor">#000000</color>
-        <color name="secondaryTextColor">#000000</color>
+    <!-- Theme Pink -->
+    <color name="primaryColor_pink">#f8bbd0</color>
+    <color name="primaryLightColor_pink">#ffeeff</color>
+    <color name="primaryDarkColor_pink">#c48b9f</color>
+    <color name="secondaryColor_pink">#f06292</color>
+    <color name="secondaryLightColor_pink">#ff94c2</color>
+    <color name="secondaryDarkColor_pink">#ba2d65</color>
+    <color name="primaryTextColor_pink">#000000</color>
+    <color name="secondaryTextColor_pink">#000000</color>
 
 </resources>

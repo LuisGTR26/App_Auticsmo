@@ -7,7 +7,7 @@ data class RutinaWithProcedimiento(
     @Embedded val rutina: Rutina,
     @Relation(
         //Campo de rutina
-        parentColumn = "titleRutina",
+        parentColumn = "idRutina",
         //Campo de procedimiento
         entityColumn = "rutina"
     )

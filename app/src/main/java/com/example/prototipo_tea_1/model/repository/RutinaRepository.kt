@@ -5,35 +5,51 @@ import com.example.prototipo_tea_1.model.data.database.dao.RutinaDao
 import com.example.prototipo_tea_1.model.data.database.entities.Procedimiento
 import com.example.prototipo_tea_1.model.data.database.entities.Rutina
 import com.example.prototipo_tea_1.model.data.database.entities.RutinaWithProcedimiento
+import kotlinx.coroutines.flow.Flow
 
 class RutinaRepository(private val rutinaDao: RutinaDao) {
 
+    /** ----------------------- OBTENER ----------------------- **/
     //Obtengo todas las rutinas
-    val readAllData: LiveData<List<Rutina>> = rutinaDao.getAll()
+    val readAllData: Flow<List<Rutina>> = rutinaDao.getAll()
 
-    //Obtengo todas las rutinas de un ambito en especifico
+    //Obtengo todas las rutinas de un ambito
     fun getRutinaAmbito(amb: String): LiveData<List<Rutina>> {
         return rutinaDao.getRutinaAmbito(amb)
     }
 
-    //Obtengo todos los pasos de una rutina en especifico
-    fun getPasoRutina(name: String): LiveData<List<RutinaWithProcedimiento>> {
-        return rutinaDao.getRutinaWithProcedimientos(name)
+    //Obtengo todos los pasos de una rutina
+    fun getPasoRutina(idR: Int): LiveData<List<RutinaWithProcedimiento>> {
+        return rutinaDao.getRutinaWithProcedimientos(idR)
     }
 
-    //Pasos de la rutina 2DA FORMA
-    fun obtenerPasosRutina(nameP: String): LiveData<List<Procedimiento>>{
-        return rutinaDao.getPasosRutina(nameP)
+    //Obtengo id de rutina por el nombre
+    fun getIdRutina(name:String):Int{
+        return rutinaDao.getByName(name)
     }
-
-    //Agregar una rutina
-    fun addRutina(rutina: Rutina){
+    /** ----------------------- INSERTAR ----------------------- **/
+    suspend fun addRutina(rutina: Rutina){
         rutinaDao.addRutina(rutina)
     }
 
-    //Agregar un procedimiento
-    fun addProcedimiento(procedimiento: Procedimiento){
+    suspend fun addPaso(procedimiento: Procedimiento){
         rutinaDao.addProcedimiento(procedimiento)
+    }
+    /** ----------------------- ACTUALIZAR ----------------------- **/
+    suspend fun updateRutina(rutina: Rutina){
+        rutinaDao.updateRutina(rutina)
+    }
+
+    suspend fun updatePaso(procedimiento: Procedimiento){
+        rutinaDao.updatePaso(procedimiento)
+    }
+    /** ----------------------- ELIMINAR ----------------------- **/
+    suspend fun deleteRutina(rutina: Rutina){
+        rutinaDao.deleteRutina(rutina)
+    }
+
+    suspend fun deletePaso(procedimiento: Procedimiento){
+        rutinaDao.deletePaso(procedimiento)
     }
 
 }

@@ -6,24 +6,22 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "procedimiento_table")
+@Entity(tableName = "procedimiento_table",
+        foreignKeys = [
+            ForeignKey(
+                entity = Rutina::class,
+                parentColumns = ["idRutina"],
+                childColumns = ["rutina"],
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+            )
+        ]
+)
 data class Procedimiento (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idProcedimiento" )val idProcedimiento:Int = 0,
+    @ColumnInfo(name = "idProcedimiento" )val idProcedimiento:Long,
     @ColumnInfo(name = "titleProcedimiento" )val titleProcedimiento:String,
     @ColumnInfo(name = "descripcion")val description:String,
     @ColumnInfo(name = "imgProcedimiento")val imgProcedimiento:Bitmap,
-    @ColumnInfo(name = "rutina")val rutina:String
+    @ColumnInfo(name = "rutina")val rutina:Int
 )
-
-
-/*
-* , foreignKeys = [
-    ForeignKey(
-        entity = Rutina::class,
-        parentColumns = ["idRutina"],
-        childColumns = ["rutinaId"]
-    )]
-    *
-    * @ColumnInfo(name = "rutinaId")val rutinaId:Int
-* */

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_personalFragment_to_procedimientosFragment"
             app:destination="@id/procedimientosFragment" />
+        <action
+            android:id="@+id/action_personalFragment_to_editarRutina"
+            app:destination="@id/editarRutina" />
     </fragment>
     <fragment
         android:id="@+id/familiarFragment"
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_familiarFragment_to_procedimientosFragment"
             app:destination="@id/procedimientosFragment" />
+        <action
+            android:id="@+id/action_familiarFragment_to_editarRutina"
+            app:destination="@id/editarRutina" />
     </fragment>
     <fragment
         android:id="@+id/socialFragment"
@@ -40,6 +46,9 @@
         <action
             android:id="@+id/action_socialFragment2_to_procedimientosFragment"
             app:destination="@id/procedimientosFragment" />
+        <action
+            android:id="@+id/action_socialFragment_to_editarRutina"
+            app:destination="@id/editarRutina" />
     </fragment>
     <fragment
         android:id="@+id/crearRutina"
@@ -68,5 +77,14 @@
             android:name="currentRutina"
             app:argType="com.example.prototipo_tea_1.model.data.database.entities.Rutina" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/editarRutina"
+        android:name="com.example.prototipo_tea_1.view.fragments.EditarRutina"
+        android:label="fragment_editar_rutina"
+        tools:layout="@layout/fragment_editar_rutina" >
+        <argument
+            android:name="currentRutina"
+            app:argType="com.example.prototipo_tea_1.model.data.database.entities.Rutina" />
     </fragment>
 </navigation>

@@ -26,9 +26,9 @@ class Fragment_Intro : Fragment() {
         // Para ingresar el binding
         _binding = FragmentIntroBinding.inflate(inflater)
         val view = binding.root
-
         val  viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
-
+        //Habilitamos desplazamiento
+        //viewPager?.isUserInputEnabled = true
         //Cuando den siguiente
         val nextBtn = binding.btnNext
         nextBtn.setOnClickListener {

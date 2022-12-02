@@ -5,51 +5,52 @@ import androidx.room.*
 import com.example.prototipo_tea_1.model.data.database.entities.Procedimiento
 import com.example.prototipo_tea_1.model.data.database.entities.Rutina
 import com.example.prototipo_tea_1.model.data.database.entities.RutinaWithProcedimiento
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RutinaDao {
 
-    //Obtener todos los datos de la tabla
-    @Query("SELECT * from rutina_table")
-    fun getAll(): LiveData<List<Rutina>>
+    /** ----------------------- INSERTAR ----------------------- **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addRutina(rutina: Rutina)
 
-    //Obtener todas las rutina de un ambito en especifico
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addProcedimiento(procedimiento: Procedimiento)
+
+    /** ----------------------- OBTENER ----------------------- **/
+    //Obtener todas las rutinas
+    @Query("SELECT * from rutina_table")
+    fun getAll(): Flow<List<Rutina>>
+
+    //Obtener todas las rutina de un ambito
     @Transaction
     @Query("SELECT * FROM rutina_table WHERE ambito = :amb")
     fun getRutinaAmbito(amb: String): LiveData<List<Rutina>>
 
     //Obtener todos los pasos de una rutina
     @Transaction
-    @Query("SELECT * FROM rutina_table WHERE titleRutina = :name")
-    fun getRutinaWithProcedimientos(name: String):  LiveData<List<RutinaWithProcedimiento>>
-
-    //Get pasos por name de rutina from table procedimiento 2da FORMA
-    @Transaction
-    @Query("SELECT * FROM procedimiento_table WHERE rutina = :nameP")
-    fun getPasosRutina(nameP: String): LiveData<List<Procedimiento>>
-
-    //Obtener una rutina en especifico
     @Query("SELECT * FROM rutina_table WHERE idRutina = :id")
-    fun getById(id: Int): Rutina
+    fun getRutinaWithProcedimientos(id: Int):  LiveData<List<RutinaWithProcedimiento>>
 
-    //Crear una nueva rutina
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addRutina(rutina: Rutina)
+    //Obtener una rutina por su nombre
+    @Query("SELECT idRutina FROM rutina_table WHERE titleRutina = :name")
+    fun getByName(name: String): Int
 
-    //Crear un nuevo procedimiento
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addProcedimiento(procedimiento: Procedimiento)
-
-    //Actualizar
+    /** ----------------------- ACTUALIZAR ----------------------- **/
     @Update
-    fun update(rutina: Rutina):Int
+    suspend fun updateRutina(rutina: Rutina)
 
-    //Eliminar
+    @Update
+    suspend fun updatePaso(procedimiento: Procedimiento)
+
+    /** ----------------------- ELIMINAR ----------------------- **/
+    //TODO buscar como eliminar la rutina junto a todos sus procedimientos que tenga
     @Delete
-    fun delete(rutina: Rutina):Int
+    suspend fun deleteRutina(rutina: Rutina)
 
+    @Delete
+    suspend fun deletePaso(procedimiento: Procedimiento)
 }
-
 
 ////Obtener todos los datos de la tabla
 //    @Query("SELECT * from rutina_table")

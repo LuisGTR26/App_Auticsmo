@@ -10,37 +10,38 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.prototipo_tea_1.R
 import com.example.prototipo_tea_1.databinding.FragmentCrearRutinaBinding
 import com.example.prototipo_tea_1.model.data.database.entities.Rutina
 import com.example.prototipo_tea_1.view.activitys.MenuActivity
 import com.example.prototipo_tea_1.viewmodel.MainViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.coroutines.*
 
 
 class CrearRutina : Fragment() {
 
     //Var global
     var ambito:String = ""
-    lateinit var image: Bitmap
-    var imageUri: Uri? = null
+    private lateinit var image: Bitmap
+    private var imageUri: Uri? = null
 
     //Binding
     private var _binding: FragmentCrearRutinaBinding? = null
@@ -59,12 +60,6 @@ class CrearRutina : Fragment() {
         // Para ingresar el binding
         _binding = FragmentCrearRutinaBinding.inflate(inflater)
         val view = binding.root
-        //Ocultamos el bottom navigation y el banner superior
-        val navB= requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val relL= requireActivity().findViewById<ConstraintLayout>(R.id.bannerMenu)
-        navB.visibility = View.GONE
-        relL.visibility = View.GONE
-
         //ViewModel
         mRutinaViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
@@ -74,8 +69,8 @@ class CrearRutina : Fragment() {
         val adaptador = ArrayAdapter(requireContext(), R.layout.list_ambitos, ambitos)
         spinner.adapter = adaptador
         //Cuando seleccionen un ambito guardar el valor
-        spinner.onItemSelectedListener = object:
-            AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 ambito = binding.spinAmbitos.selectedItem.toString()
@@ -96,18 +91,23 @@ class CrearRutina : Fragment() {
         }
 
         //Cuando pulse el boton seleccionar imagen
-        val selecBtn = binding.btnCambiar
-        selecBtn.setOnClickListener {
-                //showPictureDialog()
+        binding.imgRutina.setOnClickListener {
             //Verificamos que tenga permisos de camara y almacenamiento
-            if (ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED ){
-                    showPictureDialog()
-                }else{
-                    getPermission()
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.CAMERA
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                showPictureDialog()
+            } else {
+                getPermission()
 
-                }
+            }
         }
         //Cuando pulse el boton de terminar
         val finishBtn = binding.btnIrPasos
@@ -117,41 +117,41 @@ class CrearRutina : Fragment() {
 
         return view
     }
-
-    //Para verificar si estan vacios los editText
-    private fun inputCheck(titulo:String):Boolean{
-        return !(TextUtils.isEmpty(titulo))
-    }
-
     //Para agregar la rutina a la bd
+    @OptIn(DelicateCoroutinesApi::class)
     private fun insertDataToDatabase() {
         val titulo = binding.titleRutina.text.toString()
         val imgV = binding.imgRutina
 
         //Verificamos que no este vacio
         if (titulo.isNotEmpty()){
-            if (imgV.tag != "vacio"){
-                //Creamos un objeto
-                val rutina = Rutina(0, titulo, image, ambito)
-                //Lo añadimos a la bd
-                mRutinaViewModel.addRutina(rutina)
-                //Desplegamos mensaje de éxito
-                Toast.makeText(requireContext(), "Rutina Añadida", Toast.LENGTH_LONG).show()
-                //Nos dirigimos para crear los pasos
-                val direction = CrearRutinaDirections.actionCrearRutinaToCrearProcedimiento(titulo)
-                findNavController().navigate(direction)
+            //Verificamos que tenga un minimo de palabras y un maximo igual
+            if(titulo.length < 3  || titulo.length > 20){
+                Toast.makeText(requireContext(),"Escribe una cantidad minima de 3 y máximo de 20 palabras",Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(requireContext(), "Imagen Faltante", Toast.LENGTH_SHORT).show()
+                //Verificamos que tenga una imagen
+                if (imgV.tag != "vacio"){
+                    //Creamos un objeto
+                    val rutina = Rutina(0, titulo, image, ambito)
+                    //Lo añadimos a la bd
+                    mRutinaViewModel.addRutina(rutina)
+                    //Nos dirigimos a otra pantalla para crear los pasos
+                    val direction = CrearRutinaDirections.actionCrearRutinaToCrearProcedimiento(rutina.titleRutina)
+                    findNavController().navigate(direction)
+                    Toast.makeText(requireContext(), "Rutina Añadida: ${rutina.titleRutina}", Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(requireContext(), "Imagen Faltante", Toast.LENGTH_SHORT).show()
+                }
             }
         }else{
-            Toast.makeText(requireContext(), "Por favor ingrese los datos faltantes", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Por favor ingrese los datos faltantes", Toast.LENGTH_SHORT).show()
         }
     }
 
     //Despliega un cuadro de dialogo
     private fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(requireContext())
-        val pictureDialogItems = arrayOf("Seleccinar foto de Galería", "Capturar foto con la Camara")
+        val pictureDialogItems = arrayOf("Seleccionar foto de Galería", "Capturar foto con la Camara")
         pictureDialog.setItems(pictureDialogItems
         ) { dialog, which ->
             //Dependiendo de la selecciona de arriba asigna la funcion 0-Galeria y 1-Camara
@@ -225,7 +225,5 @@ class CrearRutina : Fragment() {
                 Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
             }.check()
     }
-
-    //Boton regresar del sistema
 
 }

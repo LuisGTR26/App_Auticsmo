@@ -1,0 +1,41 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="Cuenta">
+
+        <EditTextPreference
+            app:key="name"
+            app:title="Cambiar el nombre"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="mode_admin"
+            app:title="Activar Administrador"
+            app:summaryOff="No eres administrador"
+            app:summaryOn="Eres administrador"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Apariencia">
+
+        <ListPreference
+            app:title="Cambiar el tema"
+            app:key="theme"
+            app:defaultValue="1"
+            app:entries="@array/themes"
+            app:entryValues="@array/theme_value" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Acerca de">
+        <Preference
+            app:summary="Haga click para ver nuestro repositorio"
+            app:title="Codigo de la app">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.google.com"/>
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -8,15 +8,15 @@ import com.example.prototipo_tea_1.model.data.database.entities.Rutina
 import com.example.prototipo_tea_1.model.data.database.entities.RutinaWithProcedimiento
 import com.example.prototipo_tea_1.model.repository.RutinaRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<Rutina>>
-
     private val repository: RutinaRepository
-
-    //Me muestra todas las rutinas
+    private val readAllData: Flow<List<Rutina>>
     init {
         val rutinaDao = RutinaDatabase.getDatabase(application).rutinaDao()
         repository = RutinaRepository(rutinaDao)
@@ -24,30 +24,80 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     }
 
-    //Me muestra las rutinas de un ambito en especifico
-    fun mostrarRutinaAmbito(ambitoSeleccionado: String):LiveData<List<Rutina>>{
-        return repository.getRutinaAmbito(ambitoSeleccionado)
+    /** ----------------------- OBTENER ----------------------- **/
+    //Me muestra las rutinas de un ambito
+    fun mostrarRutinaAmbito(ambito: String): LiveData<List<Rutina>> {
+        return repository.getRutinaAmbito(ambito)
     }
 
-    //Muesta los pasos de la rutina seleccionada
-    fun mostrarPasosRutina(nombreR: String): LiveData<List<RutinaWithProcedimiento>> {
-           return repository.getPasoRutina(nombreR)
+    //Muesta los pasos de la rutina
+    fun mostrarPasosRutina(idR: Int): LiveData<List<RutinaWithProcedimiento>> {
+        return repository.getPasoRutina(idR)
     }
 
-    //Mostrar todos los pasos de una rutina 2DA FORMA
-    fun mostrarPasos(nombreP: String): LiveData<List<Procedimiento>>{
-        return repository.obtenerPasosRutina(nombreP)
+    //Muesta el id de la rutina
+    fun mostrarIdRutina(name:String):Int{
+        return repository.getIdRutina(name)
     }
-    //Creacion de rutinas
+
+    /** ----------------------- INSERTAR ----------------------- **/
     fun addRutina(rutina: Rutina){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addRutina(rutina)
         }
     }
-    //Creacion de procedimientos
-    fun addProcedimiento(procedimiento: Procedimiento){
-        viewModelScope.launch(Dispatchers.IO){
-            repository.addProcedimiento(procedimiento)
+
+    fun addPaso(procedimiento: Procedimiento){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addPaso(procedimiento)
         }
     }
+    /** ----------------------- ACTUALIZAR ----------------------- **/
+    fun actualizarRutina(rutina: Rutina){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateRutina(rutina)
+        }
+    }
+
+    fun actualizarPaso(procedimiento: Procedimiento){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updatePaso(procedimiento)
+        }
+    }
+    /** ----------------------- ELIMINAR ----------------------- **/
+    fun borrarRutina(rutina: Rutina){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRutina(rutina)
+        }
+    }
+
+    fun borrarPaso(procedimiento: Procedimiento){
+       viewModelScope.launch(Dispatchers.IO){
+           repository.deletePaso(procedimiento)
+       }
+    }
+
+   /*
+    fun addRutina(rutina: Rutina) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addRutina(rutina)
+        }
+    }
+   */
+
+    //Creacion de rutinas devolviendo el id
+    /*
+    fun addRutina2(rutina: Rutina) = liveData {
+        //you can also emit your customized object here.
+        emit("Insertando...")
+        try {
+            val response = repository.addRutina(rutina)
+            emit(response)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(e.message)
+        }
+    }
+    */
+
 }

@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "rutina_table")
 data class Rutina(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idRutina" )val idRutina:Int = 0,
+    @ColumnInfo(name = "idRutina" )val idRutina:Int,
     @ColumnInfo(name = "titleRutina" )val titleRutina:String,
     @ColumnInfo(name = "imgRutina")val imgRutina: Bitmap,
     @ColumnInfo(name = "ambito")val ambito:String

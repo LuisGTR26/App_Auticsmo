@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/settings"
+        android:title="Preferencias"
+        android:contentDescription="Preferencias"
+        app:showAsAction="never"/>
+    <!--
+    <item
+        android:id="@+id/about"
+        android:title="Acerca de "
+        android:contentDescription="Acerca de"
+        app:showAsAction="never"/>
+    -->
+    <item
+        android:id="@+id/exit"
+        android:title="Salir"
+        android:contentDescription="Salir"
+        app:showAsAction="never"/>
+
+</menu>
